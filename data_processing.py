@@ -52,8 +52,6 @@ def prepare_data(df):
     for column in df_copy.columns:
         if 'date' in column.lower():
             df_copy[column] = pd.to_datetime(df_copy[column], errors='coerce')
-            # Remove the time part, retaining only the date
-            df_copy[column] = df_copy[column].dt.date
 
     print(f"Data cleaning completed: {df.shape[0] - df_copy.shape[0]} duplicates removed, missing values filled, and date columns converted.")
     
