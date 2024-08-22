@@ -77,7 +77,7 @@ def plot_histogram(df, column):
 
 def plot_bar_chart(df, category_col, value_col):
     plt.figure(figsize=(10, 4))
-    sns.barplot(x=category_col, y=value_col, data=df, estimator=sum, errorbar=None, palette='viridis')
+    sns.barplot(x=category_col, y=value_col, data=df, estimator=sum, errorbar=None, hue=category_col, palette='viridis', legend=False)
     plt.title(f'Total {value_col} by {category_col}')
     plt.xlabel(category_col)
     plt.ylabel(f'Total {value_col}')
