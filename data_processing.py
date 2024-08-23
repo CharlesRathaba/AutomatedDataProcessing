@@ -43,10 +43,10 @@ def prepare_data(df):
     for column in df_copy.columns:
         if df_copy[column].dtype == 'object':
             # Fill missing values in categorical columns with mode
-            df_copy[column].fillna(df_copy[column].mode()[0], inplace=True)
+            df_copy[column].fillna(df_copy[column].mode()[0])
         else:
             # Fill missing values in numeric columns with mean
-            df_copy[column].fillna(df_copy[column].mean(), inplace=True)
+            df_copy[column].fillna(df_copy[column].mean())
 
     # Convert any column with 'Date' in its name to datetime format
     for column in df_copy.columns:
@@ -63,8 +63,19 @@ def calculate_summary_statistics(df):
     return summary
 
 def filter_data(df, column, value):
+    if column not in df.columns:
+        print(f"Error: Column '{column}' not found in the DataFrame")
+        return pd.DataFrame
+    
+    df[column] = df[column].astype(str).str.strip()
+    
     filtered_df = df[df[column] == value]
-    print(f"Filtered Data by {column} = {value}:\n")
+    
+    if filtered_df.empty:
+        print(f"No data found for {column} = {value}.")
+    else:
+        print(f"Filtered Data by {column} = {value}:\n")
+        
     return filtered_df
 
 def plot_histogram(df, column):
@@ -143,11 +154,13 @@ def main():
         return
 
     # Prepare data for analysis
-    cleaned_df = prepare_data(original_df)    
+    cleaned_df = prepare_data(original_df)
+    print('\n')
     
     # Summary statistics
     summary = calculate_summary_statistics(cleaned_df)
     print(summary)
+    print('\n')
 
     # Data filtering
     if args.filter_column and args.filter_value:
@@ -155,7 +168,7 @@ def main():
         # Save the filtered data
         save_processed_data(filtered_df, args.output_path)
     else:
-        filtered_df = cleaned_df
+        save_processed_data(cleaned_df, args.output_path)
     
     # Visualizations
     if args.histogram_col:

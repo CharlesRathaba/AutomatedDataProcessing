@@ -3,6 +3,8 @@
 This script processes and analyzes CSV datasets, providing functionality for data cleaning, filtering, and various visualizations including histograms, bar charts, pie charts, and scatter plots.
 For more details on script development, documentation, and usage, refer to [# 10. DOCUMENTATION in `script_notebook.ipynb`](script_notebook.ipynb#-10-documentation).
 
+NOTE: I will be using the SalesData.csv file as an example for the development of the script.
+
 ## Features
 
 - **Data Loading**: Reads a CSV file into a pandas DataFrame.
